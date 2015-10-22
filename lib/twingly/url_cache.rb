@@ -5,17 +5,19 @@ require "retryable"
 
 module Twingly
   class UrlCache
-    TTL = nil
+    attr_reader :ttl
+
     CACHE_VALUE = ""
 
-    def initialize
+    def initialize(ttl: 0)
       @cache = Dalli::Client.new(servers, options)
+      @ttl = ttl
     end
 
     def cache!(url)
       key = key_for(url)
       Retryable.retryable(tries: 3, on: Dalli::RingError) do
-        !!@cache.set(key, CACHE_VALUE, TTL, raw: true)
+        !!@cache.set(key, CACHE_VALUE, ttl, raw: true)
       end
     end
 

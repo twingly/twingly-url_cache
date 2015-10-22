@@ -13,9 +13,9 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Caches URL hashes in Memcached}
   spec.homepage      = "https://github.com/twingly/twingly-url_cache"
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.files         = Dir.glob("{lib}/**/*") + %w(README.md)
   spec.require_paths = ["lib"]
 
   spec.add_dependency "dalli", "~> 2.7"

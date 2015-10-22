@@ -25,8 +25,15 @@ describe Twingly::UrlCache do
   end
 
   describe "#cache!" do
-    subject { cache.cache!(url) }
-    it { is_expected.to be(true) }
+    context "when run once" do
+      subject { cache.cache!(url) }
+      it { is_expected.to be(true) }
+    end
+
+    context "when run multiple times on same key" do
+      subject { 14.times.map { cache.cache!(url) } }
+      it { is_expected.to all(be(true)) }
+    end
   end
 
   describe "#cached?" do

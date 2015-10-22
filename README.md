@@ -1,5 +1,7 @@
 # Twingly::UrlCache
 
+[![Build Status](https://travis-ci.org/twingly/twingly-url_cache.svg)](https://travis-ci.org/twingly/twingly-url_cache)
+
 URL cache, remember if an URL been seen before. Uses [Memcached] to cache data, prefers [MemCachier].
 
 [Memcached]: http://memcached.org/

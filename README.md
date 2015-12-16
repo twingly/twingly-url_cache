@@ -38,10 +38,10 @@ Initialize an instance, cache an URL with `#cache!` and look if it's cached with
 => false
 ```
 
-Required environment variables:
+Optional environment variables:
 
 ```Shell
-MEMCACHIER_SERVERS
+MEMCACHIER_SERVERS # Defaults to localhost
 MEMCACHIER_PASSWORD
 MEMCACHIER_USERNAME
 ```
@@ -55,4 +55,3 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/twingly/twingly-url_cache.
-

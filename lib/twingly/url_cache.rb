@@ -45,8 +45,7 @@ module Twingly
     end
 
     def servers
-      ENV.fetch("MEMCACHIER_SERVERS").split(",")
+      ENV.fetch("MEMCACHIER_SERVERS") { "localhost" }.split(",")
     end
   end
 end
-

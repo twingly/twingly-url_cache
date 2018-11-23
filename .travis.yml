@@ -7,12 +7,3 @@ services:
 - memcached
 notifications:
   email: false
-  hipchat:
-    rooms:
-      secure: jQ3bSbgTZsE8J4c2zcFn9HL45bSlovP1+02WzZg0XZmZb1jRBAqc8e3sRx9/9r2lovwizKJKLi8+RZHJhcLf8Flwor/bpuTd5v8MzBZRPVeon17alDCGzqFY52zD+BNtyFFGOc4dsplkyrU9MPzeBb2s1a6OEA+UrA2SsKMXoST6a5iHGpZzfIG6dRJdha+lq4taC5WipND/jgjWHVN3/MNsUYFb+2ebYk7uCT/Ozt2xuGt4gVFz8Nmc3nkbHqM1NZLbtVwv9C19mnwZ0XP83Kt3057dn9H3J2JXY0oIkU4KvieZE6ZEE40hQIsNdELWjoHsD+jP7VXAsVvw/eCgvKe13yIB7zcLrDMoh4bNOwl8QEKhr/hjNkoAk0QVxGP9/3CR09AeBcLl4g2NfhroTy91O1YgQNvo93QV610KDnEuJMtOpMoGgSVKnQsTGhlgylYqNqLp2PYh45uTlK+LMJYKBK0oEn5gm21MjSIeHE90ccbv29CQMKKuV5qE2OwqgL0DSKuX3HiV3Ledm0Ge9+oyYisU6FQk+tC+IrDTKA+53TQbBZCkNa3faBLyX8Ry2ezcsA2jUbvd/R32tI8q/Aq9Kop+sPmR3n3InKs3GoZgaw/oP7T6zZyZvJ0pkmzr/5qoLUk6LD2cMOD2nZYgbNGHlq+WV3ALFH6BtpVjMTw=
-    on_success: never
-    on_failure: change
-    template:
-    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}
-      (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
-    format: html

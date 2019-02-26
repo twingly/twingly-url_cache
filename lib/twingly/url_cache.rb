@@ -24,9 +24,7 @@ module Twingly
       key = key_for(url)
 
       with_memcached_exception_handling do
-        Retryable.retryable(tries: 3, on: Dalli::RingError) do
-          !!@cache.set(key, CACHE_VALUE, ttl, raw: true)
-        end
+        !!@cache.set(key, CACHE_VALUE, ttl, raw: true)
       end
     end
 
@@ -34,9 +32,7 @@ module Twingly
       key = key_for(url)
 
       with_memcached_exception_handling do
-        Retryable.retryable(tries: 3, on: Dalli::RingError) do
-          @cache.get(key, raw: true) == CACHE_VALUE
-        end
+        @cache.get(key, raw: true) == CACHE_VALUE
       end
     end
 
@@ -60,8 +56,8 @@ module Twingly
       ENV.fetch("MEMCACHIER_SERVERS") { "localhost" }.split(",")
     end
 
-    def with_memcached_exception_handling
-      yield
+    def with_memcached_exception_handling(&block)
+      Retryable.retryable(tries: 3, on: Dalli::RingError, &block)
     rescue Dalli::RingError => error
       raise ServerError, error.message
     rescue Dalli::DalliError => error

@@ -38,6 +38,18 @@ describe Twingly::UrlCache do
       context "when a Dalli::RingError is raised" do
         let(:dalli_error_class) { Dalli::RingError }
 
+        it "should retry a few times" do
+          expect_any_instance_of(Dalli::Client)
+            .to receive(dalli_method_name)
+            .exactly(3).times
+
+          begin
+            subject
+          rescue Twingly::UrlCache::ServerError
+            # NOOP
+          end
+        end
+
         it "should raise a UrlCache::ServerError" do
           expect { subject }.to raise_error(Twingly::UrlCache::ServerError,
                                             error_message)

@@ -14,7 +14,7 @@ module Twingly
 
     def initialize(ttl: 0)
       @cache = retry_transient_exceptions do
-        handle_memcached_exceptions do
+        with_exception_class_conversion do
           Dalli::Client.new(servers, options)
         end
       end
@@ -26,7 +26,7 @@ module Twingly
       key = key_for(url)
 
       retry_transient_exceptions do
-        handle_memcached_exceptions do
+        with_exception_class_conversion do
           !!@cache.set(key, CACHE_VALUE, ttl, raw: true)
         end
       end
@@ -36,7 +36,7 @@ module Twingly
       key = key_for(url)
 
       retry_transient_exceptions do
-        handle_memcached_exceptions do
+        with_exception_class_conversion do
           @cache.get(key, raw: true) == CACHE_VALUE
         end
       end
@@ -62,7 +62,7 @@ module Twingly
       ENV.fetch("MEMCACHIER_SERVERS") { "localhost" }.split(",")
     end
 
-    def handle_memcached_exceptions
+    def with_exception_class_conversion
       yield
     rescue Dalli::RingError => error
       raise ServerError, error.message

@@ -2,7 +2,7 @@ require "securerandom"
 
 describe Twingly::UrlCache do
 
-  subject(:cache) { described_class.new }
+  subject(:url_cache) { described_class.new }
 
   it { is_expected.to respond_to(:ttl) }
   it { is_expected.to respond_to(:cache!) }
@@ -11,7 +11,7 @@ describe Twingly::UrlCache do
   let(:url) { "http://blog.twingly.com/#{SecureRandom.hex}" }
 
   describe "#ttl" do
-    subject { cache.ttl }
+    subject { url_cache.ttl }
 
     context "with default ttl (no expire)" do
       it { is_expected.to be(0) }
@@ -26,11 +26,14 @@ describe Twingly::UrlCache do
 
   shared_examples "memcached exceptions" do |dalli_method_name|
     describe "memcached exception handling" do
+      let(:dalli_client) { instance_double(Dalli::Client) }
+      let(:url_cache)    { described_class.new(cache: dalli_client) }
+
       let(:error_message) { "An error has occured!" }
-      let(:dalli_error) { dalli_error_class.new(error_message) }
+      let(:dalli_error)   { dalli_error_class.new(error_message) }
 
       before do
-        allow_any_instance_of(Dalli::Client)
+        allow(dalli_client)
           .to receive(dalli_method_name)
           .and_raise(dalli_error)
       end
@@ -39,7 +42,7 @@ describe Twingly::UrlCache do
         let(:dalli_error_class) { Dalli::RingError }
 
         it "should retry a few times" do
-          expect_any_instance_of(Dalli::Client)
+          expect(dalli_client)
             .to receive(dalli_method_name)
             .exactly(3).times
 
@@ -68,7 +71,7 @@ describe Twingly::UrlCache do
   end
 
   describe "#cache!" do
-    subject(:cache!) { cache.cache!(url) }
+    subject(:cache!) { url_cache.cache!(url) }
 
     context "when run once" do
       it { is_expected.to be(true) }
@@ -84,24 +87,24 @@ describe Twingly::UrlCache do
   end
 
   describe "#cached?" do
-    subject { cache.cached?(url) }
+    subject { url_cache.cached?(url) }
 
     context "when uncached" do
       it { is_expected.to be(false) }
     end
 
     context "when cached" do
-      before { cache.cache!(url) }
+      before { url_cache.cache!(url) }
 
       it { is_expected.to be(true) }
     end
 
     context "when expired" do
       let(:ttl) { 1 }
-      let(:cache) { described_class.new(ttl: ttl) }
+      let(:url_cache) { described_class.new(ttl: ttl) }
 
       before do
-        cache.cache!(url)
+        url_cache.cache!(url)
         sleep ttl * 2
       end
 

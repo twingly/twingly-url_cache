@@ -12,14 +12,9 @@ module Twingly
 
     CACHE_VALUE = ""
 
-    def initialize(ttl: 0)
-      @cache = retry_transient_exceptions do
-        with_exception_class_conversion do
-          Dalli::Client.new(servers, options)
-        end
-      end
-
-      @ttl = ttl
+    def initialize(ttl: 0, cache: default_cache)
+      @ttl   = ttl
+      @cache = cache
     end
 
     def cache!(url)
@@ -46,6 +41,14 @@ module Twingly
 
     def key_for(url)
       Digest::MD5.digest(url)
+    end
+
+    def default_cache
+      retry_transient_exceptions do
+        with_exception_class_conversion do
+          Dalli::Client.new(servers, options)
+        end
+      end
     end
 
     def options

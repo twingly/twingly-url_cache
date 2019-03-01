@@ -41,7 +41,7 @@ describe Twingly::UrlCache do
       context "when a Dalli::RingError is raised" do
         let(:dalli_error_class) { Dalli::RingError }
 
-        it "should retry a few times" do
+        it "retries a few times" do
           expect(dalli_client)
             .to receive(dalli_method_name)
             .exactly(3).times
@@ -53,7 +53,7 @@ describe Twingly::UrlCache do
           end
         end
 
-        it "should raise a UrlCache::ServerError" do
+        it "raises a UrlCache::ServerError" do
           expect { subject }.to raise_error(Twingly::UrlCache::ServerError,
                                             error_message)
         end
@@ -62,7 +62,7 @@ describe Twingly::UrlCache do
       context "when a Dalli::DalliError is raised" do
         let(:dalli_error_class) { Dalli::DalliError }
 
-        it "should raise a UrlCache::Error" do
+        it "raises a UrlCache::Error" do
           expect { subject }.to raise_error(Twingly::UrlCache::Error,
                                             error_message)
         end

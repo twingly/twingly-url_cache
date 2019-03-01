@@ -41,10 +41,11 @@ describe Twingly::UrlCache do
       context "when a Dalli::RingError is raised" do
         let(:dalli_error_class) { Dalli::RingError }
 
-        it "retries a few times" do
+        number_of_tries = 3
+        it "tries #{number_of_tries} times" do
           expect(dalli_client)
             .to receive(dalli_method_name)
-            .exactly(3).times
+            .exactly(number_of_tries).times
 
           begin
             subject

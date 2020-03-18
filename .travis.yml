@@ -1,10 +1,10 @@
-import:
-  - twingly/travis-ci:config/notifications.yml@master
-  - twingly/travis-ci:config/ubuntu.yml@master
-  - twingly/travis-ci:config/ruby.yml@master
+dist: bionic
+language: ruby
 rvm:
   - 2.4.9
   - 2.5.7
   - 2.6.5
 services:
   - memcached
+notifications:
+  email: false

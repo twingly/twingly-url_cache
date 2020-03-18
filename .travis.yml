@@ -7,6 +7,7 @@ rvm:
 services:
   - memcached
 before_install:
+  - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
   - travis_retry gem install bundler -v "<2"
 notifications:
   email: false

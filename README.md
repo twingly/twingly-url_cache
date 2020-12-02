@@ -1,6 +1,6 @@
 # Twingly::UrlCache
 
-[![GitHub Build Status](https://github.com/twingly/twingly-url_cache/workflows/CI/badge.svg)](https://github.com/twingly/twingly-url_cache/actions)
+[![GitHub Build Status](https://github.com/twingly/twingly-url_cache/workflows/CI/badge.svg?branch=master)](https://github.com/twingly/twingly-url_cache/actions)
 
 URL cache, remember if an URL been seen before. Uses [Memcached] to cache data, prefers [MemCachier].
 

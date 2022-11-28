@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.files         = Dir.glob("{lib}/**/*") + %w(README.md)
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "dalli", "~> 2.7"
+  spec.add_dependency "dalli", "~> 3.2.3"
   spec.add_dependency "retryable", "~> 2.0"
 
   spec.add_development_dependency "rake", "~> 12"
